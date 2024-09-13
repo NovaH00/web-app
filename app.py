@@ -11,13 +11,9 @@ def home():
 def about():
     return 'This is the About Page.'
 
-@app.route('/get_weather', methods=["GET"])
-def get_weather():
-    data = get_data()
-    return jsonify(data)
 
-@app.route('/data', methods=['POST'])
-def handle_data():
+@app.route('/get_weather', methods=['POST'])
+def  get_weather():
     # Check if the request contains JSON data
     if request.is_json:
         data = request.get_json()  # Get the JSON data from the request
