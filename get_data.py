@@ -3,7 +3,8 @@ import csv
 from datetime import datetime, timedelta
 import json
 from flask import jsonify
-api_key = "CUQGXXL634ZX52TA4FRSUS99Y"
+
+API_KEY = "CUQGXXL634ZX52TA4FRSUS99Y"
 
 
 def F_to_C(F):
@@ -20,17 +21,15 @@ def get_data(id_lat_lon):
 
     for e in id_lat_lon:
         id, lat, lon = e["id"], e["lat"], e["lon"]
-        url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{lat},{lon}/last3days/next3days?key={api_key}"
+        url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{lat},{lon}/last3days/next3days?key={API_KEY}"
         response_dict[id] = []
         response = requests.get(url)
         # Check if the request was successful
         if response.status_code == 200:
             # Print the response content (JSON in this case)
             data = response.json()  # Convert the response to JSON
-            
             days_data = data["days"]
             
-            days_data = data["days"]
             for day_data in days_data:
                 if day_data["preciptype"] != None and "rain" in day_data["preciptype"]:
                     chance = cal_chance(day_data["precip"], day_data["precipprob"]) 

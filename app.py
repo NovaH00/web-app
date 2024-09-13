@@ -3,21 +3,10 @@ import json
 from get_data import get_data
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return 'Welcome to the Home Page!'
-
-@app.route('/about')
-def about():
-    return 'This is the About Page.'
-
-
 @app.route('/get_weather', methods=['POST'])
 def  get_weather():
-    # Check if the request contains JSON data
     if request.is_json:
-        data = request.get_json()  # Get the JSON data from the request
-        # Process the JSON data (you can loop through it or do other operations)
+        data = request.get_json() 
         id_lat_lon_data = []
         for entry in data:
             id_lat_lon_data.append({
@@ -30,7 +19,7 @@ def  get_weather():
         return jsonify(data), 200
         
     else:
-        return jsonify({"message": "Invalid data format, expecting JSON", "status": "error"}), 400
+        return jsonify({"message": "Kiểu dữ liệu sai, phải là JSON", "status": "error"}), 400
 
 
 if __name__ == '__main__':
