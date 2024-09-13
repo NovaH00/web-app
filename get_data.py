@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import json
 from flask import jsonify
 
-API_KEY = "CUQGXXL634ZX52TA4FRSUS99Y"
+API_KEY = "2SXHAZZ543UWV8SDYMWPYMX9Q"
 
 
 def F_to_C(F):
@@ -35,9 +35,21 @@ def get_data(id_lat_lon):
                     chance = cal_chance(day_data["precip"], day_data["precipprob"]) 
                 else:
                     chance = 0
-                    
+                
+                # Original date string
+                date_str = day_data["datetime"]  # Assuming this is in 'yyyy-mm-dd' format
+                # Convert to datetime object
+                date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+                # Get current time
+                current_time = datetime.now().time()
+                # Add current time to the date object
+                date_time_with_current = datetime.combine(date_obj, current_time)
+
+                # Format to "yyyy-mm-ddTHH:MM:SS.sssZ"
+                formatted_date = date_time_with_current.strftime('%Y-%m-%dT%H:%M:%S.%f') + 'Z'
+
                 response_dict[id].append({
-                    "date": day_data["datetime"],
+                    "date": formatted_date,
                     "temperature": F_to_C(day_data["temp"]),
                     "chance": chance
                     
